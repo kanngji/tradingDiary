@@ -1,0 +1,35 @@
+.calendar {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .dayHeader, .day, .empty {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .today {
+    background-color: #0070f3;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  .empty {
+    visibility: hidden;
+  }
+  
