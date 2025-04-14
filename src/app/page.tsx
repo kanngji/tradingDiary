@@ -1,101 +1,92 @@
 import Image from "next/image";
+import FearGreedGauge from './components/FearGreedGauge';
+import KimchiPremiumMeter from './components/KimchiPremiumMeter';
 
-export default function Home() {
+async function getKimchiPremium() {
+  try {
+    const [upbitRes, binanceRes, fxRes] = await Promise.all([
+      fetch('https://api.upbit.com/v1/ticker?markets=KRW-BTC'),
+      fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'),
+      fetch('https://api.frankfurter.app/latest?from=USD&to=KRW'),
+    ]);
+
+    const upbitData = await upbitRes.json();
+    const binanceData = await binanceRes.json();
+    const fxData = await fxRes.json();
+
+    const krwPrice = upbitData[0]?.trade_price;
+    const usdPrice = parseFloat(binanceData?.price);
+    const fxRate = fxData?.rates?.KRW;
+
+    console.log({ krwPrice, usdPrice, fxRate });
+
+    if (!krwPrice || !usdPrice || !fxRate) {
+      throw new Error('필수 데이터가 부족합니다');
+    }
+
+    const premium = ((krwPrice - usdPrice * fxRate) / (usdPrice * fxRate)) * 100;
+    return parseFloat(premium.toFixed(2));
+  } catch (err) {
+    console.error('김치프리미엄 계산 실패:', err);
+    return 0; // fallback
+  }
+}
+async function getFearGreedData() {
+  const res = await fetch('https://api.alternative.me/fng/', {
+    next: { revalidate: 3600 }, // 1시간마다 재생성
+  });
+  const data = await res.json();
+  return data.data[0]; // 최신 지수 하나만 가져오기
+}
+
+export default async function Home() {
+  const fg = await getFearGreedData();
+  const value = parseInt(fg.value);
+  const classification = fg.value_classification;
+  const premium = await getKimchiPremium();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-10">
+      <div className="bg-black p-6 rounded-2xl shadow-md w-full max-w-md text-center">
+        <h1 className="text-2xl font-bold mb-2">암호화폐 공포 & 탐욕 지수</h1>
+        <p className="text-4xl font-extrabold text-red-500">{value}</p>
+        <p className="text-lg mt-2">{classification}</p>
+        <p className="text-sm text-gray-500 mt-4">
+          제공처: Alternative.me
+        </p>
+      </div>
+      {/*<FearGreedGauge value={value} label={classification} />*/}
+      {/* 범례 표 */}
+      <div className="bg-black p-6 rounded-xl shadow w-full max-w-md">
+        <h2 className="text-lg font-semibold mb-4 text-center">지수 범례</h2>
+        <table className="table-auto w-full text-sm border border-gray-200">
+          <thead>
+            <tr className="bg-gray-100 text-gray-700">
+              <th className="border px-4 py-2">지수</th>
+              <th className="border px-4 py-2">의미</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border px-4 py-2 text-center">0 - 24</td>
+              <td className="border px-4 py-2 text-center">극단적 공포 😱</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2 text-center">25 - 49</td>
+              <td className="border px-4 py-2 text-center">공포 😨</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2 text-center">50 - 74</td>
+              <td className="border px-4 py-2 text-center">탐욕 😏</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2 text-center">75 - 100</td>
+              <td className="border px-4 py-2 text-center">극단적 탐욕 🚀</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <KimchiPremiumMeter value={premium} />
+    </main>
   );
 }
