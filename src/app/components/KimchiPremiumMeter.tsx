@@ -20,25 +20,26 @@ export default function KimchiPremiumMeter({ value }: Props) {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-md p-6 text-center">
-      <h2 className="text-xl font-bold mb-2">김치프리미엄</h2>
+    <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-md p-6 text-center mt-4">
+      <div className="relative group inline-block">
+        <h2 className="text-xl font-bold mb-2 text-black">
+          김치프리미엄
+        </h2>
 
-      {/* 막대 게이지 */}
-      <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden mb-4">
-        <div
-          className={`h-full ${getColor()}`}
-          style={{
-            width: `${50 + value}%`,
-            transition: 'width 0.3s ease',
-          }}
-        />
-        {/* 가운데 선 */}
-        <div className="absolute left-1/2 top-0 h-full w-0.5 bg-black opacity-50" />
+        {/* 툴팁 박스 */}
+        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-max rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">
+        김치 프리미엄(Kimchi premium)은 대한민국에서 거래되는 암호화폐의 시세가 해외 거래소 시세와 비교해 얼마나 높은가를 뜻하는 단어이다. <br/>줄여서 '김프'라고도 한다.  <br/>해외 거래소보다 높을 경우 '김치 프리미엄이 끼어 있다.' 비슷한 정도로 낮아질 경우 '김치 프리미엄이 빠졌다.'라고 표현한다.
+        </div>
       </div>
 
+      
+
       {/* 수치 및 상태 */}
-      <p className="text-3xl font-bold">{value > 0 ? '+' : ''}{value.toFixed(2)}%</p>
+      <p className={`text-3xl font-bold ${value > 0 ? 'text-red-500' : 'text-blue-500'}`}>
+        {value > 0 ? '+' : '-'}{value.toFixed(2)}%
+      </p>
       <p className="text-sm mt-1 text-gray-600">{getStatus()}</p>
+      
     </div>
   );
 }

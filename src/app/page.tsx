@@ -1,6 +1,8 @@
 import Image from "next/image";
 import FearGreedGauge from './components/FearGreedGauge';
 import KimchiPremiumMeter from './components/KimchiPremiumMeter';
+import Navbar from './components/Navbar'; // 경로 맞게
+
 
 async function getKimchiPremium() {
   try {
@@ -46,7 +48,9 @@ export default async function Home() {
   const premium = await getKimchiPremium();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-10">
+    <>
+    <Navbar />
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-10 mb-4">
       <div className="bg-black p-6 rounded-2xl shadow-md w-full max-w-md text-center">
         <h1 className="text-2xl font-bold mb-2">암호화폐 공포 & 탐욕 지수</h1>
         <p className="text-4xl font-extrabold text-red-500">{value}</p>
@@ -57,12 +61,12 @@ export default async function Home() {
       </div>
       {/*<FearGreedGauge value={value} label={classification} />*/}
       {/* 범례 표 */}
-      <div className="bg-black p-6 rounded-xl shadow w-full max-w-md">
-        <h2 className="text-lg font-semibold mb-4 text-center">지수 범례</h2>
+      <div className="bg-black p-6 rounded-xl shadow w-full max-w-md mt-4">
+        <h2 className="text-lg font-semibold mb-4 text-center">수치 범례</h2>
         <table className="table-auto w-full text-sm border border-gray-200">
           <thead>
             <tr className="bg-gray-100 text-gray-700">
-              <th className="border px-4 py-2">지수</th>
+              <th className="border px-4 py-2">수치</th>
               <th className="border px-4 py-2">의미</th>
             </tr>
           </thead>
@@ -86,7 +90,8 @@ export default async function Home() {
           </tbody>
         </table>
       </div>
-      <KimchiPremiumMeter value={premium} />
+      <KimchiPremiumMeter value={premium} /> 
     </main>
+    </> 
   );
 }
