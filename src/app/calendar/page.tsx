@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./calendar.module.css";
+import Navbar from '../components/Navbar'; // 경로 맞게
 
 export default function Calendar() {
   const today: Date = new Date();
@@ -20,6 +21,9 @@ export default function Calendar() {
   };
 
   return (
+    <>
+    <Navbar />
+    
     <div className={styles.calendar}>
       <div className={styles.header}>
         <button onClick={() => changeMonth(-1)}>Prev</button>
@@ -55,5 +59,6 @@ export default function Calendar() {
         ))}
       </div>
     </div>
+  </>
   );
 }

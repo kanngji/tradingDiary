@@ -1,6 +1,7 @@
 'use client'; // Next.js 13 이상이면 추가! (상태 관리하려면 필요)
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,15 +11,37 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-start">
         {/* 로고 */}
         <div className="text-2xl font-bold text-black mr-20">
-          Coing with
+        <Link href="/" className="relative group">
+            <div className="px-2 py-1 text-black">
+              Coing with
+            </div>
+          </Link>
         </div>
-
+        
         {/* PC 메뉴 */}
         <div className="hidden md:flex space-x-10 ml-20">
-          <a href="#home" className="text-gray-700 hover:text-black ">Home</a>
-          <a href="#about" className="text-gray-700 hover:text-black ">Info</a>
-          <a href="#services" className="text-gray-700 hover:text-black ">Calendar</a>
-          <a href="#contact" className="text-gray-700 hover:text-black ">Contact</a>
+          {/*<a href="#home" className="text-gray-700 hover:text-black ">Home</a>*/}
+          <Link href="/" className="relative group">
+            <div className="px-2 py-1 group-hover:bg-sky-100 rounded-md transition text-black">
+              Home
+            </div>
+          </Link>
+          <Link href="/info" className="relative group">
+            <div className="px-2 py-1 group-hover:bg-sky-100 rounded-md transition text-black">
+              Info
+            </div>
+          </Link>
+          <Link href="/calendar" className="relative group">
+            <div className="px-2 py-1 group-hover:bg-sky-100 rounded-md transition text-black">
+              Calendar
+            </div>
+          </Link>
+          <Link href="/contact" className="relative group">
+            <div className="px-2 py-1 group-hover:bg-sky-100 rounded-md transition text-black">
+              Contact
+            </div>
+          </Link>
+          
         </div>
 
         {/* 햄버거 버튼 */}

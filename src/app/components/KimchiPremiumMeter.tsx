@@ -36,7 +36,7 @@ export default function KimchiPremiumMeter({ value }: Props) {
 
       {/* 수치 및 상태 */}
       <p className={`text-3xl font-bold ${value > 0 ? 'text-red-500' : 'text-blue-500'}`}>
-        {value > 0 ? '+' : '-'}{value.toFixed(2)}%
+        {value > 0 ? '+' : ''}{value.toFixed(2)}%
       </p>
       <p className="text-sm mt-1 text-gray-600">{getStatus()}</p>
       
