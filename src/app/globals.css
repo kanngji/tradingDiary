@@ -19,3 +19,43 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* fullcalendar 기본 테두리 및 텍스트 색상 재정의 */
+.fc .fc-daygrid-day-number {
+  color: #000 !important; /* 날짜 숫자 */
+}
+
+.fc .fc-col-header-cell-cushion {
+  color: #000 !important; /* 요일 (Sun, Mon...) */
+}
+
+.fc .fc-toolbar-title {
+  color: #000 !important; /* "April 2025" 같은 헤더 타이틀 */
+}
+
+.fc .fc-scrollgrid {
+  border-color: #000 !important; /* 달력 전체 테두리 */
+}
+
+/* FullCalendar 좌우 이동 버튼 사이 간격 */
+.fc .fc-button-group > .fc-button {
+  margin-right: 6px;
+}
+
+.fc-toolbar .fc-toolbar-chunk {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* 버튼 사이 간격 */
+}
+
+/* today 버튼 배경을 하늘색으로, hover 시 더 진하게 */
+.fc .fc-button.fc-today-button {
+  background-color: #0ea5e9 !important; /* sky-500 */
+  border: none;
+  color: white;
+}
+
+.fc .fc-button.fc-today-button:hover {
+  background-color: #0284c7 !important; /* sky-600 */
+}

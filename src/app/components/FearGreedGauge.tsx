@@ -18,7 +18,8 @@ export default function FearGreedGauge({ value, label }: Props) {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
+    <>
+    <div className="w-full max-w-md mx-auto bg-white p-6 rounded-xl shadow-md mt-24">
     <h2 className="text-xl font-bold text-center mb-4">공포 & 탐욕 지수</h2>
 
     {/* 게이지 영역 */}
@@ -54,5 +55,6 @@ export default function FearGreedGauge({ value, label }: Props) {
       <p className="text-md mt-2">{label}</p>
     </div>
   </div>
+  </>
   );
 }

@@ -45,42 +45,47 @@ export default function Contact() {
     return (
         <>
         <Navbar/>
-        <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto bg-white shadow-md rounded-2xl p-6 flex flex-col gap-4 mt-20">
-            <h2 className="text-xl font-semibold text-center text-black">Contact Us</h2>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 pt-20">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-md bg-white shadow-md rounded-2xl p-6 flex flex-col gap-4"
+    >
+      <h2 className="text-xl font-semibold text-center text-black">Contact Us</h2>
 
-            <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={form.name}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-2 text-sm text-black"
-                required
-            />
-            <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={form.email}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-2 text-sm text-black"
-                required
-            />
-            <textarea
-                name="message"
-                placeholder="Your Message"
-                value={form.message}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md p-2 h-32 text-sm text-black"
-                required
-            />
-            <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-md transition text-black"
-            >
-            Send
-            </button>
-        </form>
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        value={form.name}
+        onChange={handleChange}
+        className="border border-gray-600 rounded-md p-2 text-sm text-black"
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        value={form.email}
+        onChange={handleChange}
+        className="border border-gray-600 rounded-md p-2 text-sm text-black"
+        required
+      />
+      <textarea
+        name="message"
+        placeholder="Your Message"
+        value={form.message}
+        onChange={handleChange}
+        className="border border-gray-600 rounded-md p-2 h-32 text-sm text-black"
+        required
+      />
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-md transition"
+      >
+        Send
+      </button>
+    </form>
+  </div>
         
         
         </>

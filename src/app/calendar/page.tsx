@@ -1,64 +1,83 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import styles from "./calendar.module.css";
-import Navbar from '../components/Navbar'; // 경로 맞게
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction'; // optional, for click/drag
+import Navbar from '../components/Navbar';
+import {useState} from 'react';
 
 export default function Calendar() {
-  const today: Date = new Date();
-  const [currentDate, setCurrentDate] = useState<Date>(today);
-
-  const startOfMonth: Date = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-  const endOfMonth: Date = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-
-  const daysInMonth: number[] = [];
-  for (let i = 1; i <= endOfMonth.getDate(); i++) {
-    daysInMonth.push(i);
-  }
-
-  const changeMonth = (offset: number): void => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + offset, 1));
-  };
+  
+  // 계좌관리 버튼
+  
+  const events = [
+    {
+      title: '+₩12,000 (BTC)',
+      date: '2025-04-30',
+      color: 'green',
+    },
+    {
+      title: '-₩5,000 (ETH)',
+      date: '2025-05-01',
+      color: 'red',
+    },
+  ];
 
   return (
     <>
-    <Navbar />
+    <Navbar/>
+    <div className="flex gap-8 max-w-7xl mx-auto mt-20 p-4">
+  {/* FullCalendar */}
+    <div className="flex-1">
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        events={events}
+        editable={true}
+        selectable={true}
+        height="auto"
+        headerToolbar={{
+          left: '',   // 가운데에 타이틀 + < >
+          center: 'title prev next',                // 비워두기
+          right: 'today'             // today는 오른쪽으로!
+        }}
+      />
+    </div>
+
+    {/* MyAccount 패널 */}
     
-    <div className={styles.calendar}>
-      <div className={styles.header}>
-        <button onClick={() => changeMonth(-1)}>Prev</button>
-        <h2>
-          {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
-        </h2>
-        <button onClick={() => changeMonth(1)}>Next</button>
+    <div className="w-80 bg-white shadow-md rounded-xl p-6">
+      
+      <h2 className="text-lg font-semibold mb-4">My Account</h2>
+
+      <div className="mb-3">
+        <label className="block text-sm font-medium mb-1">시작 금액</label>
+        <input
+          type="number"
+          placeholder="₩"
+          className="w-full border border-gray-300 rounded-md p-2 text-sm"
+        />
       </div>
-      <div className={styles.days}>
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-          <div key={day} className={styles.dayHeader}>
-            {day}
-          </div>
-        ))}
-        {Array(startOfMonth.getDay())
-          .fill(null)
-          .map((_, index) => (
-            <div key={`empty-${index}`} className={styles.empty}></div>
-          ))}
-        {daysInMonth.map((day) => (
-          <div
-            key={day}
-            className={`${styles.day} ${
-              day === today.getDate() &&
-              currentDate.getMonth() === today.getMonth() &&
-              currentDate.getFullYear() === today.getFullYear()
-                ? styles.today
-                : ""
-            }`}
-          >
-            {day}
-          </div>
-        ))}
+
+      <div className="mb-3">
+        <label className="block text-sm font-medium mb-1">현재 금액</label>
+        <input
+          type="number"
+          placeholder="₩"
+          className="w-full border border-gray-300 rounded-md p-2 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">P&L</label>
+        <input
+          type="text"
+          placeholder="+₩ or -₩"
+          className="w-full border border-gray-300 rounded-md p-2 text-sm"
+        />
       </div>
     </div>
-  </>
+  </div>
+    </>
   );
 }

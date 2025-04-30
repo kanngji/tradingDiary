@@ -35,7 +35,7 @@ async function getKimchiPremium() {
 }
 async function getFearGreedData() {
   const res = await fetch('https://api.alternative.me/fng/', {
-    next: { revalidate: 3600 }, // 1시간마다 재생성
+    next: { revalidate: 360 }, // 1시간마다 재생성
   });
   const data = await res.json();
   return data.data[0]; // 최신 지수 하나만 가져오기
