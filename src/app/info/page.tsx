@@ -1,6 +1,14 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import LongShortRatio from '../components/LongShortRatio';
+import Telegram from '../components/Telegram';
+
+
+const dummyPosts = [
+    { channel: 'Crypto Korea', text: '비트코인 상승 예측 🚀', views: 1200 },
+    { channel: 'Crypto Banter', text: 'ETH 5% 급등 소식!', views: 850 },
+    { channel: 'Whale Alert', text: '고래 1000 BTC 이동!', views: 2200 },
+  ];
 
 export default function Info() {
     return (
@@ -14,6 +22,7 @@ export default function Info() {
                 </div>
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
                     텔레그램 Post
+                    <Telegram posts={dummyPosts}/>
                 </div>
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
                     롱 & 숏 비율
