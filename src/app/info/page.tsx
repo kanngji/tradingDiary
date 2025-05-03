@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import LongShortRatio from '../components/LongShortRatio';
 import Telegram from '../components/Telegram';
+import IndicatorResults from '../components/IndicatorResults';
 
 
 const dummyPosts = [
@@ -21,15 +22,16 @@ export default function Info() {
                     
                 </div>
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
-                    텔레그램 Post
+                    
                     <Telegram posts={dummyPosts}/>
                 </div>
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
-                    롱 & 숏 비율
+                    
                     <LongShortRatio/>
                 </div>
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
-                    참고 지표
+                    
+                    <IndicatorResults/>
                 </div>
             </div>
         </main>

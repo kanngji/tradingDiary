@@ -18,6 +18,8 @@ const data = [
 export default function LongShortRatio () {
     return (
         <>
+            <div className="max-w-5xl mx-auto mt-10 p-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">📊 롱숏 비율</h2>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart
                 layout="vertical"
@@ -42,6 +44,7 @@ export default function LongShortRatio () {
                 <br/>
                 *해당 데이터의 출처는 Binance에서 제공하는 API 입니다.
             </h2>
+            </div>
         </>
     )
 };
