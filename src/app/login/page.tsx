@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -64,6 +65,10 @@ export default function LoginForm() {
       >
         로그인
       </button>
+      <Link href="/signup"
+        className="w-full bg-white-600 text-gray-600 rounded p-2 border border-gray-300 text-center block hover:bg-gray-300"        >
+        회원가입
+      </Link>
     </form>
     </div>
     </>

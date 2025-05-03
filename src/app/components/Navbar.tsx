@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Dialog } from '@headlessui/react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpenAnnounce, setIsopenAnnounce] = useState(false);
 
   // 화면 크기 변경 감지
   useEffect(() => {
@@ -31,6 +33,9 @@ export default function Navbar() {
     // UI가 깨지기 시작하는 지점(예: 768px)을 설정하세요
     setIsMobile(window.innerWidth < 1024);
   };
+
+  // Dialog
+
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
@@ -73,9 +78,31 @@ export default function Navbar() {
         {/* 공지사항 회원가입 로그인 - isMobile 상태에 따라 표시/숨김 */}
         {!isMobile && (
           <div className="flex space-x-4">
-            <button className="px-3 py-1 rounded-md border border-gray-300 text-sm hover:bg-gray-100 text-black">
+            <button onClick={()=> setIsopenAnnounce(true)}className="px-3 py-1 rounded-md border border-gray-300 text-sm hover:bg-gray-100 text-black">
               공지사항
             </button>
+            <Dialog open={isOpenAnnounce} onClose={() => setIsopenAnnounce(false)} className="relative z-50">
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              <div className="fixed inset-0 flex items-center justify-center">
+              <Dialog.Panel className="bg-white p-6 rounded shadow" style={{ width: '800px' }}>
+              <Dialog.Title className="text-lg font-bold text-black">공지사항</Dialog.Title>
+              <p className="mt-2 text-black">여기에 공지사항 내용을 넣으세요.</p>
+              <div className="flex justify-center">
+                <button
+                onClick={() => setIsopenAnnounce(false)}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded mt-10 mr-5">
+                닫기
+                </button>
+                <button
+                
+                className="mt-4 px-4 py-2 bg-green-500 text-white rounded mt-10">
+                작성
+                </button>
+                
+              </div>
+              </Dialog.Panel>
+              </div>
+            </Dialog>
             <Link href="/signup">
               <button className="px-3 py-1 rounded-md bg-sky-500 text-white text-sm hover:bg-sky-600">
                 회원가입

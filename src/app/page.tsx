@@ -51,41 +51,41 @@ export default async function Home() {
     <>
     <Navbar />
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-10 mb-4">
-      <div className="bg-black p-6 rounded-2xl shadow-md w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-2">암호화폐 공포 & 탐욕 지수</h1>
+      <div className="bg-white p-6 rounded-2xl shadow-md w-full max-w-md text-center">
+        <h1 className="text-2xl font-bold mb-2 text-black">암호화폐 공포 & 탐욕 지수</h1>
         <p className="text-4xl font-extrabold text-red-500">{value}</p>
-        <p className="text-lg mt-2">{classification}</p>
+        <p className="text-lg mt-2 text-black">{classification}</p>
         <p className="text-sm text-gray-500 mt-4">
           제공처: Alternative.me
         </p>
       </div>
       {/*<FearGreedGauge value={value} label={classification} />*/}
       {/* 범례 표 */}
-      <div className="bg-black p-6 rounded-xl shadow w-full max-w-md mt-4">
-        <h2 className="text-lg font-semibold mb-4 text-center">수치 범례</h2>
+      <div className="bg-white p-6 rounded-xl shadow w-full max-w-md mt-4">
+        <h2 className="text-lg font-semibold mb-4 text-center text-black">수치 범례</h2>
         <table className="table-auto w-full text-sm border border-gray-200">
           <thead>
-            <tr className="bg-gray-100 text-gray-700">
-              <th className="border px-4 py-2">수치</th>
-              <th className="border px-4 py-2">의미</th>
+            <tr className="bg-gray-300">
+              <th className="border px-4 py-2 text-black">수치</th>
+              <th className="border px-4 py-2 text-black">의미</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border px-4 py-2 text-center">0 - 24</td>
-              <td className="border px-4 py-2 text-center">극단적 공포 😱</td>
+              <td className="border px-4 py-2 text-center text-black">0 - 24</td>
+              <td className="border px-4 py-2 text-center text-black">극단적 공포 😱</td>
             </tr>
             <tr>
-              <td className="border px-4 py-2 text-center">25 - 49</td>
-              <td className="border px-4 py-2 text-center">공포 😨</td>
+              <td className="border px-4 py-2 text-center text-black">25 - 49</td>
+              <td className="border px-4 py-2 text-center text-black">공포 😨</td>
             </tr>
             <tr>
-              <td className="border px-4 py-2 text-center">50 - 74</td>
-              <td className="border px-4 py-2 text-center">탐욕 😏</td>
+              <td className="border px-4 py-2 text-center text-black">50 - 74</td>
+              <td className="border px-4 py-2 text-center text-black">탐욕 😏</td>
             </tr>
             <tr>
-              <td className="border px-4 py-2 text-center">75 - 100</td>
-              <td className="border px-4 py-2 text-center">극단적 탐욕 🚀</td>
+              <td className="border px-4 py-2 text-center text-black">75 - 100</td>
+              <td className="border px-4 py-2 text-center text-black">극단적 탐욕 🚀</td>
             </tr>
           </tbody>
         </table>
