@@ -59,3 +59,14 @@ body {
 .fc .fc-button.fc-today-button:hover {
   background-color: #0284c7 !important; /* sky-600 */
 }
+
+/* 전역 스타일 CSS에 추가 화살표없애기*/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+}
