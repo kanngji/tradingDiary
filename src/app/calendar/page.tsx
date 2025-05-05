@@ -20,7 +20,7 @@ export default function Calendar() {
   const [startMoney, setStartMoney] = useState(1000000); // 초기값 100만원
   const [currentMoney, setCurrentMoney] = useState(1000000);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [inputMoney, setInputMoney] = useState<number>('');
+  const [inputMoney, setInputMoney] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 계좌관리 버튼
