@@ -16,7 +16,7 @@ type Post = {
 export default function Telegram({posts} : TelegramVerticalCarouselProps) {
     return (
         <>
-            <div className="w-full h-96 max-w-md mx-auto ">
+            <div className="w-full h-96 max-w-md mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">📄 텔레그램 포스트</h2>
   <Swiper
     direction="vertical"

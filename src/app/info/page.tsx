@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import LongShortRatio from '../components/LongShortRatio';
 import Telegram from '../components/Telegram';
 import IndicatorResults from '../components/IndicatorResults';
+import ExchangeExecution from '../components/ExchangeExecution';
 
 
 const dummyPosts = [
@@ -18,7 +19,9 @@ export default function Info() {
         <main className="w-full h-screen p-8 bg-gray-50">
             <div className="grid grid-cols-2 gap-6 h-full mt-20">
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
-                    거래소 별 체결량
+                    
+                    <ExchangeExecution/>
+
                     
                 </div>
                 <div className="bg-white border border-gray-400 rounded-lg p-4 text-center text-black">
