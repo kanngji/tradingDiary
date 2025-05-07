@@ -13,9 +13,9 @@ export default function KimchiPremiumMeter({ value }: Props) {
   };
 
   const getStatus = () => {
-    if (value > 1.5) return '매우 김치프리미엄 🥵';
-    if (value > 0) return '김치프리미엄 😬';
-    if (value > -1.5) return '거의 무프리미엄 😐';
+    if (value > 1.5) return '국내 암호화폐 가격이 해외보다 높게 형성 🥵';
+    if (value > 0) return '😬';
+    if (value > -1.5) return '국내 암호화폐 가격이 해외보다 낮게 형성 😐';
     return '김치 디스카운트 🧊';
   };
 
