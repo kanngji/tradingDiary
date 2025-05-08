@@ -1,18 +1,39 @@
 'use client';
 
-import React from 'react';
+import React, {useState, useEffect}from 'react';
 
 export default function IndicatorResults() {
 
-  const indicators = [
-    { title: "GDP", value: "3.2%" },
-    { title: "실업률", value: "4.0%" },
-    { title: "CPI", value: "2.5%" },
-    { title: "소비자심리지수", value: "57" },
-    { title: "기준금리", value: "4.33%" },
-    { title: "비농업 신규고용", value: "159,000" },
-    { title: "미시간 소비자심리", value: "62" }
-  ];
+  const [indicators, setIndicators] = useState<{ title: string; value: any }[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('http://localhost:8000/api/economicIndicators/latest');
+        const data = await res.json();
+
+        // API에서 받은 데이터를 화면에 쓸 형식으로 변환
+        const formattedData = [
+          { title: "GDP", value: Number(data.gdp.value).toLocaleString() },  // % 제거
+          { title: "실업률", value: data.unemployment_rate.value + "%" },
+          { title: "CPI", value: Number(data.cpi.value).toLocaleString() }, // % 제거
+          { title: "소비자심리지수", value: data.consumer_sentiment.value },
+          { title: "기준금리", value: data.federal_funds_rate.value + "%" },
+          { title: "비농업 신규고용", value: Number(data.nonfarm_payrolls.value).toLocaleString() }
+        ];
+
+        setIndicators(formattedData);
+      } catch (error) {
+        console.error("지표 데이터를 가져오는 중 에러 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!indicators) {
+    return <div className="text-center text-gray-500">지표 데이터를 불러오는 중...</div>;
+  }
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-4">
@@ -21,7 +42,7 @@ export default function IndicatorResults() {
         {indicators.map((item, index) => (
           <div key={index} className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-200">
             <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-            <p className="text-2xl text-blue-600 font-bold">{item.value}</p>
+            <p className="text-2xl text-black-300 bg-blue-100  font-bold">{item.value}</p>
           </div>
         ))}
       </div>
