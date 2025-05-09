@@ -17,8 +17,8 @@ type CalendarEvent = {
 export default function Calendar() {
   
   // 상태값
-  const [startMoney, setStartMoney] = useState(1000000); // 초기값 100만원
-  const [currentMoney, setCurrentMoney] = useState(1000000);
+  const [startMoney, setStartMoney] = useState(0); // 초기값 100만원
+  const [currentMoney, setCurrentMoney] = useState(0);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [inputMoney, setInputMoney] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +28,21 @@ export default function Calendar() {
 
   // 날짜 클릭핸들러
   const handleDateClick = (arg: any) => {
+
+    // 미래날짜 클릭하면 alert창 
+    const clickedDate = new Date(arg.dateStr);
+    const today = new Date();
+
+    today.setHours(0,0,0,0);
+    clickedDate.setHours(0,0,0,0);
+
+    if (clickedDate > today) {
+      alert('미래 날짜는 선택할 수 없습니다. \nDo not select future.');
+      return; // 모달 열지 않음
+    }
+
+
+
     setSelectedDate(arg.dateStr); // yyyy-mm-dd 형식날짜
     setIsModalOpen(true);
   }
