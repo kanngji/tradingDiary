@@ -20,7 +20,7 @@ export default function LongShortRatio () {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await fetch("http://localhost:8000/api/longshort/ratios");
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/longshort/ratios`);
                 const data = await res.json();
     
                 const binanceEntire = data.binanceEntire;

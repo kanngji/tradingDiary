@@ -31,7 +31,8 @@ export default function Signup() {
 
     try {
       // API 호출 (FastAPI 회원가입 라우터 연결)
-      const res = await fetch('http://localhost:8000/api/signup', {
+    
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

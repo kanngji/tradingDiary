@@ -9,7 +9,7 @@ export default function IndicatorResults() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/economicIndicators/latest');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/economicIndicators/latest`);
         const data = await res.json();
 
         // API에서 받은 데이터를 화면에 쓸 형식으로 변환

@@ -3,20 +3,23 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setError('');
 
-    const res = await fetch('/api/login', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ email, password }),
     });
 
@@ -25,6 +28,7 @@ export default function LoginForm() {
       setEmail('');
       setPassword('');
       // ✅ 로그인 성공 후 페이지 이동 가능 (예: window.location.href = '/dashboard')
+      router.push('/');
     } else {
       const result = await res.json();
       setError(result.detail || '로그인 실패');

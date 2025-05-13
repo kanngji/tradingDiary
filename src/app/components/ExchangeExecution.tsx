@@ -16,7 +16,7 @@ export default function ExchangeExecution() {
 
   // useEffect
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8000/ws/client");  // 🔥 실제 도메인으로 바꾸기!
+    const socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_BACKEND_WS}/ws/client`);  // 🔥 실제 도메인으로 바꾸기!
 
     socket.onopen = () => {
         console.log("웹소켓 연결됨");

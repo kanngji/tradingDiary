@@ -15,7 +15,8 @@ type Post = {
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const res = await fetch('http://localhost:8000/api/telegram/popular-posts');
+            //const res = await fetch('http://localhost:8000/api/telegram/popular-posts');
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/telegram/popular-posts`);
             const data = await res.json();
 
             // 채널별 posts를 펼쳐서 Post[] 형태로 변환
