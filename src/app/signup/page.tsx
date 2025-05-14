@@ -62,7 +62,7 @@ export default function Signup() {
       <Navbar/> 
       
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 space-y-4 text-black">
           <h2 className="text-2xl font-bold text-center">회원 가입</h2>
 
           <input

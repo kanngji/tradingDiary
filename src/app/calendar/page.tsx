@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // optional, for clic
 import Navbar from '../components/Navbar';
 import {useState} from 'react';
 import {Dialog} from '@headlessui/react';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 
 type CalendarEvent = {
@@ -22,6 +23,8 @@ export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [inputMoney, setInputMoney] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const email = useAuthStore((state) => state.email);
 
   // 계좌관리 버튼
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -130,8 +133,10 @@ export default function Calendar() {
         {/* MyAccount */}
         <div className="w-80 bg-white shadow-md rounded-xl p-6 text-black">
           <h2 className="text-lg font-semibold mb-4">My Account</h2>
+          
+          {email && <h6 className="mr-4 text-gray-600">{email}님</h6>}
 
-          <div className="mb-3">
+          <div className="mt-3 mb-3">
             <label className="block text-sm font-medium mb-1">시작 금액</label>
             <input
               type="number"

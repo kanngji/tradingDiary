@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Dialog } from '@headlessui/react';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isOpenAnnounce, setIsopenAnnounce] = useState(false);
+
+  const email = useAuthStore((state) => state.email);
 
   // 화면 크기 변경 감지
   useEffect(() => {
@@ -35,6 +38,16 @@ export default function Navbar() {
   };
 
   // Dialog
+
+  const logout = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/logout`, {
+      method: 'POST',
+      credentials: 'include'
+    });
+  
+    useAuthStore.getState().clearEmail(); // ✅ 전역 상태 초기화
+    
+  };
 
 
   return (
@@ -108,11 +121,25 @@ export default function Navbar() {
                 회원가입
               </button>
             </Link>
-            <Link href="/login">
+            {email ? (
+              <>
+             
+              <button onClick={logout} className="px-3 py-1 rounded-md bg-gray-800 text-white text-sm hover:bg-gray-700">
+                로그아웃
+              </button>
+              
+              </>
+            ):(
+              <>
+              <Link href="/login">
               <button className="px-3 py-1 rounded-md bg-gray-800 text-white text-sm hover:bg-gray-700">
                 로그인
               </button>
             </Link>
+              </>
+              
+            )}
+            
           </div>
         )}
 
@@ -157,11 +184,26 @@ export default function Navbar() {
               회원가입
             </div>
           </Link>
-          <Link href="/login">
+          {email ? (
+              <>
+              
+            <div onClick ={logout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+              로그아웃
+            </div>
+          
+              </>
+            ):(
+              <>
+              <Link href="/login">
             <div className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
               로그인
             </div>
           </Link>
+              </>
+              
+            )}
+
+          
         </div>
       )}
     </nav>
