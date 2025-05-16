@@ -32,6 +32,11 @@ export default function Calendar() {
   // 날짜 클릭핸들러
   const handleDateClick = (arg: any) => {
 
+    if (!email) {
+      alert('로그인이 필요한 기능입니다');
+      return 
+    }
+
     // 미래날짜 클릭하면 alert창 
     const clickedDate = new Date(arg.dateStr);
     const today = new Date();
@@ -89,6 +94,35 @@ export default function Calendar() {
     setIsModalOpen(false);
     setInputMoney(0);
   }
+  // 시작금액 세팅
+  const handleSaveStartMoney = () => {
+    if (!email || startMoney <= 0) {
+      alert("이메일이 없거나 시작 금액이 0입니다.");
+      return;
+    }
+  
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/monthly-setup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        start_amount: startMoney,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('저장 실패');
+        return res.json();
+      })
+      .then((data) => {
+        alert("시작 금액 저장 완료!");
+        console.log("Setup 저장 완료:", data);
+      })
+      .catch((err) => {
+        console.error("저장 오류:", err);
+      });
+  };
 
   // P&L계산
   const pnl = currentMoney - startMoney;
@@ -144,6 +178,11 @@ export default function Calendar() {
               onChange={(e) => setStartMoney(Number(e.target.value))}
               className="w-full border border-gray-300 rounded-md p-2 text-sm"
             />
+            <button
+              onClick={handleSaveStartMoney}
+              className="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md text-sm"
+            >시작금액 저장
+            </button>
           </div>
 
           <div className="mb-3">
