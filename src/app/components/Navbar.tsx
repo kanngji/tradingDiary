@@ -9,11 +9,17 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isOpenAnnounce, setIsopenAnnounce] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  // 로그인 상태 가져오기
   const email = useAuthStore((state) => state.email);
+  const logout = useAuthStore((state) => state.logout);
 
   // 화면 크기 변경 감지
   useEffect(() => {
+    // 마운트 상태 설정 (hydration 오류 방지)
+    setMounted(true);
+    
     // 초기 설정
     checkScreenSize();
     
@@ -37,18 +43,26 @@ export default function Navbar() {
     setIsMobile(window.innerWidth < 1024);
   };
 
-  // Dialog
-
-  const logout = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/logout`, {
-      method: 'POST',
-      credentials: 'include'
-    });
-  
-    useAuthStore.getState().clearEmail(); // ✅ 전역 상태 초기화
+  // 로그아웃 처리 함수
+  const handleLogout = async () => {
+    try {
+      // 백엔드 로그아웃 요청
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
     
+      // Zustand 전역 상태 초기화 (persist 미들웨어로 localStorage에도 반영됨)
+      logout();
+      
+      // 페이지 새로고침 (선택사항)
+      window.location.href = '/';
+    } catch (error) {
+      console.error('로그아웃 오류:', error);
+      // 백엔드 오류가 발생해도 프론트엔드에서는 로그아웃 처리
+      logout();
+    }
   };
-
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
@@ -89,9 +103,9 @@ export default function Navbar() {
         )}
 
         {/* 공지사항 회원가입 로그인 - isMobile 상태에 따라 표시/숨김 */}
-        {!isMobile && (
+        {!isMobile && mounted && (
           <div className="flex space-x-4">
-            <button onClick={()=> setIsopenAnnounce(true)}className="px-3 py-1 rounded-md border border-gray-300 text-sm hover:bg-gray-100 text-black">
+            <button onClick={()=> setIsopenAnnounce(true)} className="px-3 py-1 rounded-md border border-gray-300 text-sm hover:bg-gray-100 text-black">
               공지사항
             </button>
             <Dialog open={isOpenAnnounce} onClose={() => setIsopenAnnounce(false)} className="relative z-50">
@@ -107,11 +121,9 @@ export default function Navbar() {
                 닫기
                 </button>
                 <button
-                
                 className="mt-4 px-4 py-2 bg-green-500 text-white rounded mt-10">
                 작성
                 </button>
-                
               </div>
               </Dialog.Panel>
               </div>
@@ -123,11 +135,9 @@ export default function Navbar() {
             </Link>
             {email ? (
               <>
-             
-              <button onClick={logout} className="px-3 py-1 rounded-md bg-gray-800 text-white text-sm hover:bg-gray-700">
+              <button onClick={handleLogout} className="px-3 py-1 rounded-md bg-gray-800 text-white text-sm hover:bg-gray-700">
                 로그아웃
               </button>
-              
               </>
             ):(
               <>
@@ -137,9 +147,7 @@ export default function Navbar() {
               </button>
             </Link>
               </>
-              
             )}
-            
           </div>
         )}
 
@@ -157,7 +165,7 @@ export default function Navbar() {
       </div>
 
       {/* 모바일 메뉴 - isMobile 상태와 isOpen 상태에 따라 표시/숨김 */}
-      {isMobile && isOpen && (
+      {isMobile && isOpen && mounted && (
         <div className="bg-white shadow-md">
           <Link href="/">
             <div className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
@@ -185,25 +193,16 @@ export default function Navbar() {
             </div>
           </Link>
           {email ? (
-              <>
-              
-            <div onClick ={logout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+            <div onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
               로그아웃
             </div>
-          
-              </>
-            ):(
-              <>
-              <Link href="/login">
-            <div className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-              로그인
-            </div>
-          </Link>
-              </>
-              
-            )}
-
-          
+          ) : (
+            <Link href="/login">
+              <div className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                로그인
+              </div>
+            </Link>
+          )}
         </div>
       )}
     </nav>
