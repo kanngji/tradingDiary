@@ -41,6 +41,31 @@ export default function Calendar() {
       .catch(err => {
         console.error('시작 금액 불러오기 실패:', err);
       });
+
+    // 손익 기록 가져오기
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calendar/${email}/records?year=${year}&month=${month}`)
+    .then(res => res.json())
+    .then(date => {
+      setEvents(date);
+    })
+    .catch(err => {
+      console.error("손익 기록 불러오기 실패:", err);
+    })
+
+    // 서버에서 계산된 현재금액 + 시작금액 + 손익 합계 
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calendar/${email}/currentMoney`)
+    .then(res => res.json())
+    .then(data => {
+      setStartMoney(data.start_amount);
+      setCurrentMoney(data.current_amount);
+    })
+    .catch(err => {
+      console.error("현재 금액 상태 불러오기 실패:", err);
+    });
   }, [email]);
 
   const handleDateClick = (arg: any) => {
