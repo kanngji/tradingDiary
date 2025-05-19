@@ -10,12 +10,6 @@ type Props = {
 export default function FearGreedGauge({ value, label }: Props) {
   const angle = (value / 100) * 180 - 90; // -90도(좌) ~ +90도(우)
 
-  const getColor = () => {
-    if (value < 25) return 'text-red-500';
-    if (value < 50) return 'text-orange-500';
-    if (value < 75) return 'text-yellow-500';
-    return 'text-green-500';
-  };
 
   return (
     <>

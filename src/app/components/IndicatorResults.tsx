@@ -4,7 +4,7 @@ import React, {useState, useEffect}from 'react';
 
 export default function IndicatorResults() {
 
-  const [indicators, setIndicators] = useState<{ title: string; value: any }[]>([]);
+  const [indicators, setIndicators] = useState<{ title: string; value: string | number }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

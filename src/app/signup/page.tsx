@@ -12,10 +12,9 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // 입력값 검증
+  
     if (!email || !password || !confirmPassword) {
       setError('모든 필드를 입력해주세요.');
       return;
@@ -30,8 +29,6 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      // API 호출 (FastAPI 회원가입 라우터 연결)
-    
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,13 +36,13 @@ export default function Signup() {
       });
 
       const data = await res.json();
-      
+    
       if (res.ok) {
         alert('회원가입 성공!');
         setEmail('');
         setPassword('');
         setConfirmPassword('');
-        router.push('http://localhost:3000/login');
+        router.push('/login'); // URL 직접 입력 대신 라우터 경로로 추천
       } else {
         setError(data.detail || '회원가입 실패');
       }
@@ -56,6 +53,7 @@ export default function Signup() {
       setLoading(false);
     }
   };
+
 
   return (
     <>  

@@ -1,5 +1,3 @@
-import Image from "next/image";
-import FearGreedGauge from './components/FearGreedGauge';
 import KimchiPremiumMeter from './components/KimchiPremiumMeter';
 import Navbar from './components/Navbar'; // 경로 맞게
 

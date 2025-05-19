@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { DateClickArg } from '@fullcalendar/interaction';
 
 type CalendarEvent = {
   title: string;
@@ -68,7 +69,7 @@ export default function Calendar() {
     });
   }, [email]);
 
-  const handleDateClick = (arg: any) => {
+  const handleDateClick = (arg: DateClickArg) => {
     if (!email) {
       alert('로그인이 필요한 기능입니다');
       return;
